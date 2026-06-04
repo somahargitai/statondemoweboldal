@@ -1,0 +1,207 @@
+/* ============================================================
+   STATON — design system
+   "structural precision": warm concrete, graphite ink, signal
+   orange accent, fine technical grid, monospace annotations.
+   ============================================================ */
+
+:root {
+  /* palette */
+  --paper: #efebe3;        /* warm concrete base            */
+  --paper-2: #e6e1d6;      /* slightly deeper panel          */
+  --ink: #16130f;          /* near-black warm graphite       */
+  --ink-2: #3a352e;        /* secondary text                 */
+  --ink-3: #756d60;        /* muted / captions               */
+  --line: #cdc6b7;         /* hairline rules on paper        */
+  --line-ink: rgba(239, 235, 227, 0.14); /* hairline on dark */
+  --accent: #da4b1b;       /* signal orange                  */
+  --accent-deep: #b63c12;
+  --steel: #2e6e5a;        /* secondary accent (rail/green)  */
+
+  /* type */
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body: 'Hanken Grotesk', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* layout */
+  --maxw: 1280px;
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --radius: 2px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 400;
+  /* subtle paper grain via layered gradients */
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(22, 19, 15, 0.045) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+/* ---- typography scale ---- */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  font-size: clamp(2.6rem, 7.5vw, 6.4rem);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+
+/* ---- layout helpers ---- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: clamp(4.5rem, 10vw, 9rem);
+}
+
+.section--dark {
+  background: var(--ink);
+  color: var(--paper);
+}
+.section--dark h1,
+.section--dark h2,
+.section--dark h3,
+.section--dark h4 {
+  color: var(--paper);
+}
+
+/* ---- buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.95rem 1.6rem;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+.btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+}
+.btn--ghost:hover {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.section--dark .btn--ghost {
+  color: var(--paper);
+  border-color: var(--line-ink);
+}
+.section--dark .btn--ghost:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* arrow that nudges on hover */
+.btn .arrow {
+  transition: transform 0.25s var(--ease);
+}
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ---- reveal-on-scroll ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* utility */
+.hr {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+}
+.section--dark .hr {
+  background: var(--line-ink);
+}
